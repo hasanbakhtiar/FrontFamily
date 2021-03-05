@@ -1,0 +1,18 @@
+1.git config --global user.name 'ex-name'
+1.1.git config --global user.email 'ex-email'
+
+2.git clone ex-link
+
+3.git add .
+
+4.git commit -m 'ilk komit'
+
+5.git push origin main (branch name)
+
+ls -> siyahı
+ls -l -> siyahı icazələri icazələri
+ls -a  -> gizli qovluqları göstərən siyahı
+
+mkdir -> qovluq yaradır
+
+touch -> file yaradır
