@@ -24,98 +24,242 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 var root = document.getElementById("root");
 
-var Counter = /*#__PURE__*/function (_React$Component) {
-  _inherits(Counter, _React$Component);
+var TodoApp = /*#__PURE__*/function (_React$Component) {
+  _inherits(TodoApp, _React$Component);
 
-  var _super = _createSuper(Counter);
+  var _super = _createSuper(TodoApp);
 
-  function Counter(props) {
+  function TodoApp(props) {
     var _this;
 
-    _classCallCheck(this, Counter);
+    _classCallCheck(this, TodoApp);
 
     _this = _super.call(this, props);
-    _this.addOne = _this.addOne.bind(_assertThisInitialized(_this));
-    _this.minusOne = _this.minusOne.bind(_assertThisInitialized(_this));
-    _this.reset = _this.reset.bind(_assertThisInitialized(_this));
+    _this.addItem = _this.addItem.bind(_assertThisInitialized(_this));
+    _this.deleteItem = _this.deleteItem.bind(_assertThisInitialized(_this));
     _this.state = {
-      number: 0
+      items: ['item1', 'item2', 'item3']
     };
     return _this;
   }
 
-  _createClass(Counter, [{
-    key: "addOne",
-    value: function addOne() {
-      this.setState(function (addState) {
+  _createClass(TodoApp, [{
+    key: "deleteItem",
+    value: function deleteItem(item) {
+      this.setState(function (prevState) {
+        var arr = prevState.items.filter(function (i) {
+          return item != i;
+        });
         return {
-          number: addState.number + 1
+          items: arr
         };
       });
     }
   }, {
-    key: "minusOne",
-    value: function minusOne() {
-      this.setState(function (minusState) {
+    key: "addItem",
+    value: function addItem(item) {
+      if (!item) {
+        return 'please add item';
+      } else if (this.state.items.indexOf(item) > -1) {
+        return 'please add deferent item';
+      }
+
+      this.setState(function (prevState) {
         return {
-          number: minusState.number - 1
+          items: prevState.items.concat(item)
         };
-      });
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this.setState({
-        number: 0
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Number: ", this.state.number), /*#__PURE__*/React.createElement("button", {
-        onClick: this.addOne
-      }, "+1"), /*#__PURE__*/React.createElement("button", {
-        onClick: this.minusOne
-      }, "-1"), /*#__PURE__*/React.createElement("button", {
-        onClick: this.reset
-      }, "Reset"));
+      var app = {
+        title: "ToDo Application",
+        description: "This app for To Do"
+      };
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Header, {
+        title: app.title,
+        description: app.description
+      }), /*#__PURE__*/React.createElement(TodoList, {
+        items: this.state.items
+      }), /*#__PURE__*/React.createElement(Action, {
+        addItem: this.addItem
+      }));
     }
   }]);
 
-  return Counter;
+  return TodoApp;
 }(React.Component);
 
-var template = /*#__PURE__*/React.createElement(Counter, null);
+var Header = /*#__PURE__*/function (_React$Component2) {
+  _inherits(Header, _React$Component2);
+
+  var _super2 = _createSuper(Header);
+
+  function Header() {
+    _classCallCheck(this, Header);
+
+    return _super2.apply(this, arguments);
+  }
+
+  _createClass(Header, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, this.props.title), /*#__PURE__*/React.createElement("p", null, this.props.description));
+    }
+  }]);
+
+  return Header;
+}(React.Component);
+
+var TodoList = /*#__PURE__*/function (_React$Component3) {
+  _inherits(TodoList, _React$Component3);
+
+  var _super3 = _createSuper(TodoList);
+
+  function TodoList() {
+    _classCallCheck(this, TodoList);
+
+    return _super3.apply(this, arguments);
+  }
+
+  _createClass(TodoList, [{
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("ul", null, this.props.items.map(function (item, index) {
+        return /*#__PURE__*/React.createElement(TodoItem, {
+          item: item,
+          key: index
+        });
+      }));
+    }
+  }]);
+
+  return TodoList;
+}(React.Component);
+
+var TodoItem = /*#__PURE__*/function (_React$Component4) {
+  _inherits(TodoItem, _React$Component4);
+
+  var _super4 = _createSuper(TodoItem);
+
+  function TodoItem(props) {
+    var _this2;
+
+    _classCallCheck(this, TodoItem);
+
+    _this2 = _super4.call(this, props);
+    _this2.deleteItem = _this2.deleteItem.bind(_assertThisInitialized(_this2));
+    return _this2;
+  }
+
+  _createClass(TodoItem, [{
+    key: "deleteItem",
+    value: function deleteItem() {
+      this.porps.deleteItem(this.porps.item);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("li", null, this.props.item, /*#__PURE__*/React.createElement("button", {
+        onClick: this.deleteItem
+      }, "x"));
+    }
+  }]);
+
+  return TodoItem;
+}(React.Component);
+
+var Action = /*#__PURE__*/function (_React$Component5) {
+  _inherits(Action, _React$Component5);
+
+  var _super5 = _createSuper(Action);
+
+  function Action(props) {
+    var _this3;
+
+    _classCallCheck(this, Action);
+
+    _this3 = _super5.call(this, props);
+    _this3.onFormSubmit = _this3.onFormSubmit.bind(_assertThisInitialized(_this3));
+    return _this3;
+  }
+
+  _createClass(Action, [{
+    key: "onFormSubmit",
+    value: function onFormSubmit(e) {
+      e.preventDefault();
+      var item = e.target.elements.txtItem.value.trim();
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("form", {
+        onSubmit: this.onFormSubmit
+      }, /*#__PURE__*/React.createElement("input", {
+        type: "text",
+        name: "txtItem"
+      }), /*#__PURE__*/React.createElement("button", {
+        type: "submit"
+      }, "Add Item")));
+    }
+  }]);
+
+  return Action;
+}(React.Component);
+
+var template = /*#__PURE__*/React.createElement(TodoApp, null);
 ReactDOM.render(template, root); // const root = document.getElementById('root');
-// let number = 0;
-// const btnAddClassName = "btnRed";
-// const btnClearClassName = "btnGreen";
-// const addOne = () =>{
-//     number ++;
-//     renderApp();
+// class InfoData extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                 <h1>{this.props.title}</h1>
+//                 <p>{this.props.metn}</p>
+//             </div>
+//         );
+//     }
 // }
-// const clearOne = () =>{
-//     number --;
-//     renderApp();
+// class List extends React.Component{ //2ci
+//     render(){
+//         return(
+//             <div>
+//                 <ul>
+//                 <Item />
+//             </ul>
+//             <ul>
+//                 <Item />
+//             </ul>
+//             <ul>
+//                 <Item />
+//             </ul>
+//             <ul>
+//                 <Item />
+//             </ul>
+//             </div>
+//         );
+//     }
 // }
-// var renderApp = () => {
-//         var template = 
-//         <div>
-//             <h1>Number: {number}</h1>
-//             <button id="btnPlusOne" className={btnAddClassName} onClick = {addOne}>+1</button>
-//             <button id="btnMinusOne" className={btnClearClassName} onClick = {clearOne}>-1</button>
-//         </div>
-//         ;
+// class Item extends React.Component{ //3cu 
+//     render(){
+//         return(
+//             <li>Lorem ipsum dolor sit amet.</li>
+//         );
+//     }
+// }
+// var infoMetn = {
+//     item : "Item",
+//     model: "s10"
+// };
+// class Main extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                 <InfoData title="React" metn={infoMetn.model}/>
+//                 <List />
+//             </div>
+//         );
+//     }
+// }
+// var template = (<Main />);
 // ReactDOM.render(template,root);
-// }
-// renderApp();
-// var counter = () =>{
-//     var infoTime = (
-//         <div>
-//             <h2>Time is:{new Date().toLocaleTimeString()}</h2>
-//         </div>
-//     );
-// ReactDOM.render(infoTime,root);
-// }
-// setInterval(counter, 1000);
-// counter();
