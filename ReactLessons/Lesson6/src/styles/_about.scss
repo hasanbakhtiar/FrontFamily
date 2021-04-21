@@ -1,0 +1,13 @@
+.main-box{
+    display: flex;
+    .left-box{
+        width: 40%;
+        height: 30vh;
+        background-color: green;
+    }
+    .right-box{
+        width: 60%;
+        height: 30vh;
+        // background-color: green;
+    }
+}
