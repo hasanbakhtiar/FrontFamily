@@ -2,38 +2,39 @@
 
 //React v16+ : function component + hook => stateful function component
 
-import React, {  useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import  './styles/main.scss'
+import image from './img/img.jpg';
+import { createStore } from 'redux'
+
+
+const initalState = {
+    count: 0
+}
+
+const store = createStore((state = initalState, action)=>{
+    switch(action.type){
+        case "INCREMENT":
+            return{
+                
+            }
+            case "DECREMET":
+            return{
+                count: state.count - 1
+            }
+            default:
+                return state
+    }
+})
+
+store.dispatch({
+    type: "INCREMENT"
+})
 
 
 
-// class App extends Component{
-//     constructor(props){
-//         super(props);
-//         this.state={
-//             count: 0
-//         }
-//     }
 
-//     render(){
-//         return(
-//             <div>
-//                 <p>{this.state.count} clicked</p>
-//                 <button onClick={()=>this.setState({
-//                     count: this.state.count + 1
-//                 })}>+1</button>
-//             </div>
-//         )
-//     }
-// }
-
-
-//ES5
-// function App(){
-//     return(
-//         <div>React1</div>
-//     )
-// }
 
 
 //ES6
@@ -42,15 +43,29 @@ const App = (props) =>{
     const hesab = ()=>{
         setData(count+1);
     }
+
+    useEffect(()=>{
+        console.log('didmount');
+    },[])
+    useEffect(()=>{
+        console.log(' update');
+    })
+   
     return(
         <div>
+             <img src={image}   alt=""/>
+
              <p>{count} clicked</p>
              <button onClick={hesab}>+1</button>
              <button onClick={()=>setData(count-1)}>-1</button>
              <button onClick={()=>setData(props.count)}>reset</button>
+
         </div>
+        
     )
 }
+
+
 
 App.defaultProps = {
     count:5
